@@ -4,9 +4,9 @@
   "version": "3.0.0",
   "identifier": "fr.entrepixel.neosearch",
   "build": {
-    "frontendDist": "../",
     "beforeBuildCommand": "",
-    "beforeDevCommand": ""
+    "beforeDevCommand": "",
+    "frontendDist": "../src"
   },
   "app": {
     "withGlobalTauri": true,

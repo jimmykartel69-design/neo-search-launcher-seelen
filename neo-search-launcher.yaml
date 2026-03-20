@@ -3,13 +3,13 @@ icon: "FiSearch"
 
 metadata:
   displayName: "Neo Search Launcher"
-  description: "Widget Seelen pour ouvrir NeoSearch et afficher un accès rapide au launcher"
+  description: "Widget Seelen pour lancer NeoSearch rapidement sans chemin local fixe."
   author: "Jimmy"
   tags:
     - "search"
     - "launcher"
-    - "toolbar"
     - "tauri"
+    - "windows"
 
 settings: []
 
@@ -28,58 +28,88 @@ css: |
     align-items: center;
     gap: 8px;
     padding: 4px 8px;
-    font-family: "Segoe UI", sans-serif;
+    font-family: "Segoe UI Variable Display", "Segoe UI", sans-serif;
   }
 
   #neo-open {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.06);
-    color: #eef4ff;
-    padding: 8px 12px;
+    border: 1px solid rgba(152, 197, 255, 0.35);
+    background: linear-gradient(180deg, rgba(24, 45, 78, 0.62), rgba(9, 20, 37, 0.8));
+    color: #eef7ff;
+    padding: 7px 12px;
     border-radius: 12px;
     cursor: pointer;
-    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    transition: 140ms ease;
   }
 
   #neo-open:hover {
-    background: rgba(255, 255, 255, 0.10);
+    border-color: rgba(97, 214, 255, 0.72);
+    background: linear-gradient(180deg, rgba(32, 58, 100, 0.72), rgba(14, 29, 50, 0.9));
   }
 
   .neo-dot {
     width: 10px;
     height: 10px;
     border-radius: 999px;
-    background: linear-gradient(135deg, #73b7ff, #8d6bff);
-    box-shadow: 0 0 12px rgba(115, 183, 255, 0.8);
+    background: linear-gradient(135deg, #61d6ff, #5f9cff);
+    box-shadow: 0 0 10px rgba(97, 214, 255, 0.8);
   }
 
   .neo-label {
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 650;
+    letter-spacing: 0.2px;
   }
 
   #neo-hint {
-    font-size: 12px;
-    opacity: 0.72;
-    color: #c8d7f7;
+    font-size: 11px;
+    color: #c9dbf7;
+    opacity: 0.82;
   }
 
 js: |
   const btn = document.getElementById("neo-open");
 
-  if (btn) {
-    btn.addEventListener("click", async () => {
-      try {
-        // Ici tu dois brancher l'action Seelen disponible dans TON environnement.
-        // Exemple conceptuel :
-        // const api = await window.Slu?.getAsync?.();
-        // await api?.run?.({ program: "C:\\Program Files\\NeoSearch\\NeoSearch.exe" });
+  const launchScript = [
+    "$candidates = @(",
+    "  Join-Path $env:LOCALAPPDATA 'Programs\\NeoSearch\\neo-search-v3.exe',",
+    "  Join-Path $env:LOCALAPPDATA 'Programs\\NeoSearch\\NeoSearch.exe',",
+    "  Join-Path $env:ProgramFiles 'NeoSearch\\neo-search-v3.exe',",
+    "  Join-Path $env:ProgramFiles 'NeoSearch\\NeoSearch.exe',",
+    "  Join-Path $env:USERPROFILE 'AppData\\Local\\NeoSearch\\neo-search-v3.exe'",
+    ");",
+    "$target = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1;",
+    "if ($target) { Start-Process -FilePath $target } else { exit 2 }"
+  ].join(" ");
 
-        console.log("NeoSearch widget clicked");
-      } catch (err) {
-        console.error("Failed to open NeoSearch:", err);
+  async function openNeoSearch() {
+    try {
+      const api = await window.Slu?.getAsync?.();
+      if (!api?.run) {
+        console.error("Seelen run API is not available.");
+        return;
       }
-    });
+
+      await api.run({
+        program: "powershell.exe",
+        args: [
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-WindowStyle",
+          "Hidden",
+          "-Command",
+          launchScript
+        ]
+      });
+    } catch (err) {
+      console.error("Failed to open NeoSearch:", err);
+    }
+  }
+
+  if (btn) {
+    btn.addEventListener("click", openNeoSearch);
   }

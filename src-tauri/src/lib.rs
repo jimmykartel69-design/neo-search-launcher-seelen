@@ -255,7 +255,7 @@ pub fn run() {
                 let app_handle = app.handle().clone();
                 let shortcut_for_handler = shortcut.clone();
 
-                app.handle().plugin(
+                if let Err(err) = app.handle().plugin(
                     GlobalShortcutBuilder::new()
                         .with_handler(move |_app, pressed_shortcut, event| {
                             if pressed_shortcut == &shortcut_for_handler
@@ -274,9 +274,13 @@ pub fn run() {
                             }
                         })
                         .build(),
-                )?;
-
-                app.global_shortcut().register(shortcut)?;
+                ) {
+                    eprintln!("Global shortcut plugin init failed: {err}");
+                } else if let Err(err) = app.global_shortcut().register(shortcut) {
+                    eprintln!(
+                        "Unable to register Ctrl+Space shortcut ({err}). The app will continue without it."
+                    );
+                }
             }
 
             Ok(())

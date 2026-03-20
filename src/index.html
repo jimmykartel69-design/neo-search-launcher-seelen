@@ -21,12 +21,27 @@
       </div>
 
       <div class="search-wrap">
-        <input id="searchInput" type="text" placeholder="Rechercher une app, taper g/ yt/ gh ..." />
+        <div class="search-shell">
+          <span class="search-glyph">⌕</span>
+          <input id="searchInput" type="text" placeholder="Rechercher une app, taper g / yt / gh / = ..." />
+        </div>
+        <div class="quick-modes" id="quickModes">
+          <button class="mode-chip" data-prefix="g ">g web</button>
+          <button class="mode-chip" data-prefix="yt ">yt video</button>
+          <button class="mode-chip" data-prefix="gh ">gh code</button>
+          <button class="mode-chip" data-prefix="= ">= calcul</button>
+        </div>
       </div>
 
       <div class="meta">
         <span id="metaLeft">Chargement...</span>
         <span id="metaRight">0 résultat</span>
+      </div>
+
+      <div class="legend">
+        <span><kbd>↑</kbd><kbd>↓</kbd> naviguer</span>
+        <span><kbd>Enter</kbd> lancer</span>
+        <span><kbd>Esc</kbd> fermer</span>
       </div>
 
       <div id="results" class="results"></div>
