@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeoSearch</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="overlay">
+    <div class="panel">
+      <div class="topbar">
+        <div class="brand">
+          <div class="orb"></div>
+          <div>
+            <div class="title">NeoSearch V3</div>
+            <div class="sub">Launcher natif Tauri</div>
+          </div>
+        </div>
+        <button id="refreshBtn">Rafraîchir</button>
+      </div>
+
+      <div class="search-wrap">
+        <input id="searchInput" type="text" placeholder="Rechercher une app, taper g/ yt/ gh ..." />
+      </div>
+
+      <div class="meta">
+        <span id="metaLeft">Chargement...</span>
+        <span id="metaRight">0 résultat</span>
+      </div>
+
+      <div id="results" class="results"></div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "id": "@jimmy/neo-search-launcher",
+  "icon": "FiSearch",
+  "metadata": {
+    "displayName": "Neo Search Launcher",
+    "description": "Bouton compact pour NeoSearch dans Seelen",
+    "author": "Jimmy",
+    "tags": ["search", "launcher", "toolbar", "tauri"]
+  },
+  "settings": [],
+  "html": "<div id='neo-widget'><button id='neo-open'>NeoSearch</button><span id='neo-hint'>Ctrl+Space</span></div>",
+  "css": "#neo-widget{display:flex;align-items:center;gap:8px;padding:4px 8px}#neo-open{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#eef4ff;padding:8px 12px;border-radius:12px;cursor:pointer}#neo-hint{font-size:12px;opacity:.7}",
+  "js": "const btn=document.getElementById('neo-open'); if(btn){ btn.addEventListener('click',()=>{ alert('Configure ce bouton pour ouvrir NeoSearch.exe via l’action toolbar/custom action disponible dans ta version de Seelen.'); }); }"
+}

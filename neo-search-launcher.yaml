@@ -1,0 +1,85 @@
+id: "@jimmy/neo-search-launcher"
+icon: "FiSearch"
+
+metadata:
+  displayName: "Neo Search Launcher"
+  description: "Widget Seelen pour ouvrir NeoSearch et afficher un accès rapide au launcher"
+  author: "Jimmy"
+  tags:
+    - "search"
+    - "launcher"
+    - "toolbar"
+    - "tauri"
+
+settings: []
+
+html: |
+  <div id="neo-widget">
+    <button id="neo-open" title="Ouvrir NeoSearch">
+      <span class="neo-dot"></span>
+      <span class="neo-label">NeoSearch</span>
+    </button>
+    <span id="neo-hint">Ctrl+Space</span>
+  </div>
+
+css: |
+  #neo-widget {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  #neo-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #eef4ff;
+    padding: 8px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+  }
+
+  #neo-open:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+
+  .neo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #73b7ff, #8d6bff);
+    box-shadow: 0 0 12px rgba(115, 183, 255, 0.8);
+  }
+
+  .neo-label {
+    font-weight: 600;
+  }
+
+  #neo-hint {
+    font-size: 12px;
+    opacity: 0.72;
+    color: #c8d7f7;
+  }
+
+js: |
+  const btn = document.getElementById("neo-open");
+
+  if (btn) {
+    btn.addEventListener("click", async () => {
+      try {
+        // Ici tu dois brancher l'action Seelen disponible dans TON environnement.
+        // Exemple conceptuel :
+        // const api = await window.Slu?.getAsync?.();
+        // await api?.run?.({ program: "C:\\Program Files\\NeoSearch\\NeoSearch.exe" });
+
+        console.log("NeoSearch widget clicked");
+      } catch (err) {
+        console.error("Failed to open NeoSearch:", err);
+      }
+    });
+  }
